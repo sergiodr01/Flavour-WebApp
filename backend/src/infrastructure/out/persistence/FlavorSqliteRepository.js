@@ -19,10 +19,10 @@ class FlavorSqliteRepository extends FlavorRepository {
     try {
       const result = insertFlavor.run(
         flavor.name,
-        flavor.label,
-        flavor.description,
+        flavor.label ?? null,
+        flavor.description ?? null,
         flavor.createdById,
-        flavor.approvedById,
+        flavor.approvedById ?? null,
         flavor.state,
         flavor.version,
         flavor.createdAt
@@ -71,6 +71,15 @@ class FlavorSqliteRepository extends FlavorRepository {
   findAll() {
     const rows = db.prepare('SELECT * FROM flavor ORDER BY name, version').all();
     return rows.map((row) => this.#toDomain(row));
+  }
+
+  updateState(id, { state, approvedById = null }) {
+    db.prepare('UPDATE flavor SET state = ?, approved_by_id = ? WHERE id = ?').run(
+      state,
+      approvedById,
+      id
+    );
+    return this.findById(id);
   }
 
   #toDomain(row) {

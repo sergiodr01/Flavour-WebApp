@@ -22,6 +22,10 @@ class FlavorRepository {
   findAll() {
     throw new Error('FlavorRepository.findAll() must be implemented');
   }
+
+  updateState(id, { state, approvedById }) {
+    throw new Error('FlavorRepository.updateState() must be implemented');
+  }
 }
 
 module.exports = FlavorRepository;

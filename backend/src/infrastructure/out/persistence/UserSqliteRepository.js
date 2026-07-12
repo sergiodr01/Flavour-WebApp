@@ -15,6 +15,12 @@ class UserSqliteRepository extends UserRepository {
     return this.#toDomain(row);
   }
 
+  findCredentialsByLogin(login) {
+    const row = db.prepare('SELECT id, password_hash FROM user WHERE login = ?').get(login);
+    if (!row) return null;
+    return { id: row.id, passwordHash: row.password_hash };
+  }
+
   #toDomain(row) {
     const roles = db
       .prepare(

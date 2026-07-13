@@ -2,14 +2,7 @@ const FlavorPort = require('../domain/port/in/FlavorPort');
 const Flavor = require('../domain/model/Flavor');
 const FlavorIngredient = require('../domain/model/FlavorIngredient');
 const FlavorState = require('../domain/model/FlavorState');
-
-function formatTimestamp(date = new Date()) {
-  const pad = (n, len = 2) => String(n).padStart(len, '0');
-  return (
-    `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
-    `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}.${pad(date.getMilliseconds(), 3)}`
-  );
-}
+const formatTimestamp = require('../shared/formatTimestamp');
 
 class FlavorService extends FlavorPort {
   constructor(flavorRepository) {

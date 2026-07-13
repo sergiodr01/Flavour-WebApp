@@ -4,13 +4,7 @@ import { fetchFlavorById, fetchMyFlavors, editFlavor, submitFlavor } from '../..
 import { fetchIngredients } from '../../api/ingredientApi';
 import FlavorForm from '../../components/flavor/FlavorForm';
 import VersionHistory from '../../components/flavor/VersionHistory';
-
-const STATE_COLORS = {
-  new: '#6b7280',
-  submitted: '#b45309',
-  approved: '#15803d',
-  rejected: '#b91c1c',
-};
+import StateBadge from '../../components/common/StateBadge';
 
 export default function FlavorDetailPage() {
   const { id } = useParams();
@@ -62,14 +56,14 @@ export default function FlavorDetailPage() {
     return (
       <div>
         <h2>Edit {flavor.label}</h2>
-        <p style={{ color: '#666' }}>Saving will create a new version (v{flavor.version + 1}).</p>
+        <p className="form-hint">Saving will create a new version (v{flavor.version + 1}).</p>
         <FlavorForm
           ingredients={ingredients}
           initialValues={flavor}
           onSubmit={handleEditSubmit}
           submitLabel="Save New Version"
         />
-        <button type="button" onClick={() => setIsEditing(false)} style={{ marginTop: '0.5rem' }}>
+        <button type="button" onClick={() => setIsEditing(false)} className="btn btn-secondary" style={{ marginTop: '0.5rem' }}>
           Cancel
         </button>
       </div>
@@ -78,14 +72,13 @@ export default function FlavorDetailPage() {
 
   return (
     <div>
-      <p>
-        <Link to="/flavors">&larr; Back to My Flavors</Link>
-      </p>
+      <Link to="/flavors" className="back-link">
+        &larr; Back to My Flavors
+      </Link>
       <h2>
-        {flavor.label}{' '}
-        <span style={{ color: STATE_COLORS[flavor.state], fontSize: '1rem' }}>[{flavor.state}]</span>
+        {flavor.label} <StateBadge state={flavor.state} />
       </h2>
-      <p style={{ color: '#666' }}>
+      <p className="muted">
         {flavor.name} · version {flavor.version}
       </p>
       {flavor.description && <p>{flavor.description}</p>}
@@ -100,16 +93,16 @@ export default function FlavorDetailPage() {
       </ul>
 
       {flavor.state === 'new' && (
-        <div style={{ marginTop: '1rem' }}>
-          <button type="button" onClick={() => setIsEditing(true)}>
+        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+          <button type="button" onClick={() => setIsEditing(true)} className="btn btn-secondary">
             Edit (creates new version)
-          </button>{' '}
-          <button type="button" onClick={handleSubmitForReview} disabled={submitting}>
+          </button>
+          <button type="button" onClick={handleSubmitForReview} disabled={submitting} className="btn btn-primary">
             {submitting ? 'Submitting...' : 'Submit for Review'}
           </button>
         </div>
       )}
-      {submitError && <p style={{ color: 'red' }}>{submitError}</p>}
+      {submitError && <p className="form-error">{submitError}</p>}
 
       <VersionHistory versions={versions} currentId={flavor.id} />
     </div>

@@ -3,13 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { fetchFlavorById } from '../../api/flavorApi';
 import ApproveRejectButtons from '../../components/review/ApproveRejectButtons';
 import CommentSection from '../../components/review/CommentSection';
-
-const STATE_COLORS = {
-  new: '#6b7280',
-  submitted: '#b45309',
-  approved: '#15803d',
-  rejected: '#b91c1c',
-};
+import StateBadge from '../../components/common/StateBadge';
 
 export default function ReviewFlavorPage() {
   const { id } = useParams();
@@ -28,14 +22,13 @@ export default function ReviewFlavorPage() {
 
   return (
     <div>
-      <p>
-        <Link to="/review">&larr; Back to Submitted Flavors</Link>
-      </p>
+      <Link to="/review" className="back-link">
+        &larr; Back to Submitted Flavors
+      </Link>
       <h2>
-        {flavor.label}{' '}
-        <span style={{ color: STATE_COLORS[flavor.state], fontSize: '1rem' }}>[{flavor.state}]</span>
+        {flavor.label} <StateBadge state={flavor.state} />
       </h2>
-      <p style={{ color: '#666' }}>
+      <p className="muted">
         {flavor.name} · version {flavor.version}
       </p>
       {flavor.description && <p>{flavor.description}</p>}
@@ -49,7 +42,11 @@ export default function ReviewFlavorPage() {
         ))}
       </ul>
 
-      {flavor.state === 'submitted' && <ApproveRejectButtons flavorId={flavor.id} onResolved={setFlavor} />}
+      {flavor.state === 'submitted' && (
+        <div style={{ marginTop: '1rem' }}>
+          <ApproveRejectButtons flavorId={flavor.id} onResolved={setFlavor} />
+        </div>
+      )}
 
       <CommentSection flavorId={flavor.id} canAddComment={flavor.state === 'submitted'} />
     </div>

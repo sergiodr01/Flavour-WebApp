@@ -29,29 +29,37 @@ export default function FlavorForm({ ingredients, initialValues, onSubmit, submi
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 480 }}>
-      <div>
-        <label>Name (internal identifier)</label>
-        <br />
-        <input value={name} onChange={(e) => setName(e.target.value)} required disabled={lockName} />
+    <form onSubmit={handleSubmit}>
+      <div className="form-field">
+        <label className="form-label">Name (internal identifier)</label>
+        <input
+          className="form-input"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          disabled={lockName}
+        />
       </div>
-      <div style={{ marginTop: '0.5rem' }}>
-        <label>Label</label>
-        <br />
-        <input value={label} onChange={(e) => setLabel(e.target.value)} required />
+      <div className="form-field">
+        <label className="form-label">Label</label>
+        <input className="form-input" value={label} onChange={(e) => setLabel(e.target.value)} required />
       </div>
-      <div style={{ marginTop: '0.5rem' }}>
-        <label>Description</label>
-        <br />
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+      <div className="form-field">
+        <label className="form-label">Description</label>
+        <textarea
+          className="form-textarea"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </div>
 
-      <h3 style={{ marginTop: '1rem' }}>Ingredients (up to 5, 5% increments, must total 100%)</h3>
+      <h3>Ingredients</h3>
+      <p className="form-hint">Up to 5, in 5% increments, must total 100%.</p>
       <IngredientPicker ingredients={ingredients} value={flavorIngredients} onChange={setFlavorIngredients} />
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
 
-      <button type="submit" disabled={submitting} style={{ marginTop: '1rem' }}>
+      <button type="submit" disabled={submitting} className="btn btn-primary" style={{ marginTop: '1rem' }}>
         {submitting ? 'Saving...' : submitLabel}
       </button>
     </form>

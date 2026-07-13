@@ -31,8 +31,9 @@ export default function IngredientPicker({ ingredients, value, onChange, disable
           (ing) => ing.id === row.ingredientId || !usedIds.has(ing.id)
         );
         return (
-          <div key={index} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <div key={index} className="ingredient-row">
             <select
+              className="form-select"
               value={row.ingredientId}
               disabled={disabled}
               onChange={(e) => updateRow(index, { ingredientId: Number(e.target.value) })}
@@ -44,6 +45,7 @@ export default function IngredientPicker({ ingredients, value, onChange, disable
               ))}
             </select>
             <select
+              className="form-select"
               value={Math.round(row.percent * 100)}
               disabled={disabled}
               onChange={(e) => updateRow(index, { percent: Number(e.target.value) / 100 })}
@@ -55,7 +57,7 @@ export default function IngredientPicker({ ingredients, value, onChange, disable
               ))}
             </select>
             {!disabled && (
-              <button type="button" onClick={() => removeRow(index)}>
+              <button type="button" onClick={() => removeRow(index)} className="btn btn-danger">
                 Remove
               </button>
             )}
@@ -64,12 +66,17 @@ export default function IngredientPicker({ ingredients, value, onChange, disable
       })}
 
       {!disabled && value.length < MAX_INGREDIENTS && (
-        <button type="button" onClick={addRow} disabled={usedIds.size >= ingredients.length}>
+        <button
+          type="button"
+          onClick={addRow}
+          disabled={usedIds.size >= ingredients.length}
+          className="btn btn-secondary"
+        >
           + Add ingredient
         </button>
       )}
 
-      <p style={{ color: isComplete ? 'green' : '#b45309', fontWeight: 'bold' }}>
+      <p className={`ingredient-total ${isComplete ? 'is-complete' : 'is-incomplete'}`}>
         Total: {totalPercent}% {isComplete ? '✓' : '(must equal 100%)'}
       </p>
     </div>

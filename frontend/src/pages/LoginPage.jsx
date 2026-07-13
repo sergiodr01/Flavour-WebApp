@@ -29,31 +29,31 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ maxWidth: 320, margin: '4rem auto', fontFamily: 'sans-serif' }}>
+    <div className="login-page">
       <h1>Flavour WebApp</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <br />
+        <div className="form-field">
+          <label className="form-label">Email</label>
           <input
+            className="form-input"
             value={loginValue}
             onChange={(e) => setLoginValue(e.target.value)}
             type="email"
             required
           />
         </div>
-        <div style={{ marginTop: '0.5rem' }}>
-          <label>Password</label>
-          <br />
+        <div className="form-field">
+          <label className="form-label">Password</label>
           <input
+            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type="password"
             required
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit" disabled={submitting} style={{ marginTop: '1rem' }}>
+        {error && <p className="form-error">{error}</p>}
+        <button type="submit" disabled={submitting} className="btn btn-primary">
           {submitting ? 'Logging in...' : 'Login'}
         </button>
       </form>

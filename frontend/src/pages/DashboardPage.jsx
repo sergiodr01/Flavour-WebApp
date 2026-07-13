@@ -9,7 +9,7 @@ export default function DashboardPage() {
   return (
     <div>
       <h2>Welcome, {user.firstName}</h2>
-      <p>Role: {user.roles.join(', ')}</p>
+      <p className="muted">Role: {user.roles.join(', ')}</p>
 
       {isCustomer && (
         <p>

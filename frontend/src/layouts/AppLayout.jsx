@@ -6,26 +6,18 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
 
   return (
-    <div style={{ fontFamily: 'sans-serif' }}>
-      <header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1rem',
-          borderBottom: '1px solid #ddd',
-        }}
-      >
-        <strong>Flavour WebApp</strong>
-        <span style={{ display: 'flex', alignItems: 'center' }}>
+    <div>
+      <header className="app-header">
+        <span className="app-title">Flavour WebApp</span>
+        <span className="app-user">
           <NotificationBell />
           {user.firstName} ({user.roles.join(', ')})
-          <button onClick={logout} style={{ marginLeft: '1rem' }}>
+          <button onClick={logout} className="btn btn-secondary">
             Logout
           </button>
         </span>
       </header>
-      <main style={{ padding: '1rem' }}>
+      <main className="app-main">
         <Outlet />
       </main>
     </div>

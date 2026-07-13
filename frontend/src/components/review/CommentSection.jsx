@@ -32,26 +32,30 @@ export default function CommentSection({ flavorId, canAddComment = false }) {
   return (
     <div style={{ marginTop: '2rem' }}>
       <h3>Comments</h3>
-      {comments.length === 0 && <p style={{ color: '#666' }}>No comments yet.</p>}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      {comments.length === 0 && <p className="empty-state">No comments yet.</p>}
+      <ul className="comment-list">
         {comments.map((c) => (
-          <li key={c.id} style={{ borderBottom: '1px solid #eee', padding: '0.5rem 0' }}>
-            <p style={{ margin: 0 }}>{c.text}</p>
-            <small style={{ color: '#999' }}>{c.createdAt}</small>
+          <li key={c.id} className="comment-item">
+            <p>{c.text}</p>
+            <span className="comment-timestamp">{c.createdAt}</span>
           </li>
         ))}
       </ul>
 
       {canAddComment && (
-        <form onSubmit={handleSubmit} style={{ marginTop: '1rem' }}>
+        <form onSubmit={handleSubmit}>
           <textarea
+            className="form-textarea"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Leave feedback for the customer..."
-            style={{ width: '100%', maxWidth: 400 }}
           />
-          <br />
-          <button type="submit" disabled={submitting || !text.trim()}>
+          <button
+            type="submit"
+            disabled={submitting || !text.trim()}
+            className="btn btn-primary"
+            style={{ marginTop: '0.5rem' }}
+          >
             {submitting ? 'Posting...' : 'Add Comment'}
           </button>
         </form>

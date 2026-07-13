@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchMyFlavors } from '../../api/flavorApi';
-
-const STATE_COLORS = {
-  new: '#6b7280',
-  submitted: '#b45309',
-  approved: '#15803d',
-  rejected: '#b91c1c',
-};
+import StateBadge from '../../components/common/StateBadge';
 
 export default function FlavorListPage() {
   const [flavors, setFlavors] = useState([]);
@@ -23,24 +17,23 @@ export default function FlavorListPage() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="page-header">
         <h2>My Flavors</h2>
-        <Link to="/flavors/new">+ New Flavor</Link>
+        <Link to="/flavors/new" className="btn btn-primary">
+          + New Flavor
+        </Link>
       </div>
 
-      {flavors.length === 0 && <p>You haven't created any flavors yet.</p>}
+      {flavors.length === 0 && <p className="empty-state">You haven't created any flavors yet.</p>}
 
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      <ul className="card-list">
         {flavors.map((f) => (
-          <li
-            key={f.id}
-            style={{ border: '1px solid #ddd', borderRadius: 4, padding: '0.75rem', marginBottom: '0.5rem' }}
-          >
-            <Link to={`/flavors/${f.id}`} style={{ fontWeight: 'bold' }}>
+          <li key={f.id} className="card">
+            <Link to={`/flavors/${f.id}`} className="card-link">
               {f.label}
             </Link>{' '}
-            <span style={{ color: STATE_COLORS[f.state] }}>[{f.state}]</span>
-            <div style={{ fontSize: '0.85rem', color: '#666' }}>
+            <StateBadge state={f.state} />
+            <div className="muted">
               {f.name} · v{f.version}
             </div>
           </li>

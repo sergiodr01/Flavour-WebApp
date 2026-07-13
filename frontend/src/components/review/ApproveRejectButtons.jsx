@@ -19,14 +19,14 @@ export default function ApproveRejectButtons({ flavorId, onResolved }) {
   }
 
   return (
-    <div>
-      <button type="button" onClick={() => handle('approve')} disabled={submitting} style={{ color: 'green' }}>
+    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+      <button type="button" onClick={() => handle('approve')} disabled={submitting} className="btn btn-success">
         Approve
-      </button>{' '}
-      <button type="button" onClick={() => handle('reject')} disabled={submitting} style={{ color: 'red' }}>
+      </button>
+      <button type="button" onClick={() => handle('reject')} disabled={submitting} className="btn btn-danger">
         Reject
       </button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="form-error">{error}</p>}
     </div>
   );
 }

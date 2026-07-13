@@ -14,25 +14,10 @@ export default function NotificationBell() {
   }
 
   return (
-    <div style={{ position: 'relative', display: 'inline-block', marginRight: '1rem' }}>
-      <button type="button" onClick={toggle} style={{ position: 'relative' }}>
+    <div className="notification-bell">
+      <button type="button" onClick={toggle} className="notification-bell-btn">
         🔔
-        {count > 0 && (
-          <span
-            style={{
-              position: 'absolute',
-              top: -6,
-              right: -6,
-              background: 'red',
-              color: 'white',
-              borderRadius: '50%',
-              padding: '0 5px',
-              fontSize: '0.7rem',
-            }}
-          >
-            {count}
-          </span>
-        )}
+        {count > 0 && <span className="notification-badge">{count}</span>}
       </button>
       {open && <NotificationPanel items={items} />}
     </div>

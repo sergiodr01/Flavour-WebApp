@@ -17,17 +17,14 @@ export default function SubmittedFlavorsPage() {
   return (
     <div>
       <h2>Submitted Flavors</h2>
-      {flavors.length === 0 && <p>No flavors pending review.</p>}
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+      {flavors.length === 0 && <p className="empty-state">No flavors pending review.</p>}
+      <ul className="card-list">
         {flavors.map((f) => (
-          <li
-            key={f.id}
-            style={{ border: '1px solid #ddd', borderRadius: 4, padding: '0.75rem', marginBottom: '0.5rem' }}
-          >
-            <Link to={`/review/${f.id}`} style={{ fontWeight: 'bold' }}>
+          <li key={f.id} className="card">
+            <Link to={`/review/${f.id}`} className="card-link">
               {f.label}
             </Link>
-            <div style={{ fontSize: '0.85rem', color: '#666' }}>
+            <div className="muted">
               {f.name} · v{f.version}
             </div>
           </li>

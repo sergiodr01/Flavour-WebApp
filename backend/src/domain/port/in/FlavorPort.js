@@ -11,7 +11,7 @@ class FlavorPort {
     throw new Error('FlavorPort.getByUser() must be implemented');
   }
 
-  edit(id, data) {
+  edit(id, data, userId) {
     throw new Error('FlavorPort.edit() must be implemented');
   }
 

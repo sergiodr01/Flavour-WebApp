@@ -28,9 +28,15 @@ class ReviewService extends ReviewPort {
       this.#throwNotFound();
     }
 
+    if (typeof text !== 'string' || !text.trim()) {
+      const error = new Error('Comment text is required');
+      error.statusCode = 400;
+      throw error;
+    }
+
     return this.commentRepository.save(
       new Comment({
-        text,
+        text: text.trim(),
         flavorId,
         createdById: userId,
         createdAt: formatTimestamp(),

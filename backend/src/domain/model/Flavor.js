@@ -41,21 +41,53 @@ class Flavor {
       errors.push(`A flavor cannot have more than ${MAX_INGREDIENTS} ingredients.`);
     }
 
+    const seenIngredientIds = new Set();
+    let total = 0;
+
     for (const fi of this.ingredients) {
+      if (typeof fi.percent !== 'number' || Number.isNaN(fi.percent)) {
+        errors.push(`Ingredient percent must be a number (received ${JSON.stringify(fi.percent)}).`);
+        continue;
+      }
+
+      total += fi.percent;
+
+      if (fi.percent <= 0 || fi.percent > 1) {
+        errors.push(`Ingredient percent (${fi.percent}) must be greater than 0% and at most 100%.`);
+      }
+
       const steps = fi.percent / PERCENT_STEP;
       if (Math.abs(Math.round(steps) - steps) > EPSILON) {
         errors.push(
           `Ingredient percent (${fi.percent}) must be in increments of ${PERCENT_STEP * 100}%.`
         );
       }
+
+      if (seenIngredientIds.has(fi.ingredientId)) {
+        errors.push(`Duplicate ingredient detected (ingredientId ${fi.ingredientId}). Each ingredient can only be used once.`);
+      }
+      seenIngredientIds.add(fi.ingredientId);
     }
 
-    const total = this.ingredients.reduce((sum, fi) => sum + fi.percent, 0);
     if (Math.abs(total - TOTAL_PERCENT) > EPSILON) {
       errors.push(`Ingredient percentages must total 100% (currently ${(total * 100).toFixed(2)}%).`);
     }
 
     return errors;
+  }
+
+  validate() {
+    const errors = [];
+
+    if (!this.name || typeof this.name !== 'string' || !this.name.trim()) {
+      errors.push('Flavor name is required.');
+    }
+
+    if (!this.label || typeof this.label !== 'string' || !this.label.trim()) {
+      errors.push('Flavor label is required.');
+    }
+
+    return [...errors, ...this.validateIngredients()];
   }
 
   isEditable() {

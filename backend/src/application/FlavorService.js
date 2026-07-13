@@ -42,10 +42,16 @@ class FlavorService extends FlavorPort {
     return this.flavorRepository.findByCreatedBy(userId);
   }
 
-  edit(id, data) {
+  edit(id, data, userId) {
     const existing = this.flavorRepository.findById(id);
     if (!existing) {
       this.#throwNotFound();
+    }
+
+    if (existing.createdById !== userId) {
+      const error = new Error('You can only edit your own flavors');
+      error.statusCode = 403;
+      throw error;
     }
 
     if (!existing.isEditable()) {
@@ -112,7 +118,7 @@ class FlavorService extends FlavorPort {
   }
 
   #validateOrThrow(flavor) {
-    const errors = flavor.validateIngredients();
+    const errors = flavor.validate();
     if (errors.length > 0) {
       const error = new Error('Flavor validation failed');
       error.statusCode = 400;

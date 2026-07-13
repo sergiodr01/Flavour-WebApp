@@ -27,7 +27,7 @@ function getById(req, res, next) {
 
 function edit(req, res, next) {
   try {
-    res.json(flavorService.edit(Number(req.params.id), req.body));
+    res.json(flavorService.edit(Number(req.params.id), req.body, req.user.id));
   } catch (err) {
     next(err);
   }

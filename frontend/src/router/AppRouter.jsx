@@ -5,6 +5,7 @@ import DashboardPage from '../pages/DashboardPage';
 import AppLayout from '../layouts/AppLayout';
 import FlavorListPage from '../pages/customer/FlavorListPage';
 import CreateFlavorPage from '../pages/customer/CreateFlavorPage';
+import FlavorDetailPage from '../pages/customer/FlavorDetailPage';
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAuth();
@@ -27,6 +28,7 @@ export default function AppRouter() {
             <Route element={<RequireRole role="customer" />}>
               <Route path="/flavors" element={<FlavorListPage />} />
               <Route path="/flavors/new" element={<CreateFlavorPage />} />
+              <Route path="/flavors/:id" element={<FlavorDetailPage />} />
             </Route>
           </Route>
         </Route>

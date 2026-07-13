@@ -42,6 +42,7 @@ export default function FlavorDetailPage() {
     try {
       const updated = await submitFlavor(flavor.id);
       setFlavor(updated);
+      setVersions((prev) => prev.map((v) => (v.id === updated.id ? { ...v, state: updated.state } : v)));
     } catch (err) {
       setSubmitError(err.response?.data?.error ?? 'Could not submit flavor');
     } finally {

@@ -4,15 +4,15 @@ import { fetchMyFlavors } from '../api/flavorApi';
 import { fetchSubmittedFlavors } from '../api/reviewApi';
 
 const POLL_INTERVAL_MS = 15000;
-const SEEN_STATES_KEY = 'flavour_seen_states';
+const SEEN_STATES_KEY_PREFIX = 'flavour_seen_states';
 
-function loadSeenStates() {
-  const raw = localStorage.getItem(SEEN_STATES_KEY);
+function loadSeenStates(userId) {
+  const raw = localStorage.getItem(`${SEEN_STATES_KEY_PREFIX}_${userId}`);
   return raw ? JSON.parse(raw) : {};
 }
 
-function saveSeenStates(map) {
-  localStorage.setItem(SEEN_STATES_KEY, JSON.stringify(map));
+function saveSeenStates(userId, map) {
+  localStorage.setItem(`${SEEN_STATES_KEY_PREFIX}_${userId}`, JSON.stringify(map));
 }
 
 export function useNotifications() {
@@ -21,7 +21,7 @@ export function useNotifications() {
   const isFlavorist = user.roles.includes('flavorist');
 
   const [items, setItems] = useState([]);
-  const seenStatesRef = useRef(loadSeenStates());
+  const seenStatesRef = useRef(loadSeenStates(user.id));
 
   const poll = useCallback(async () => {
     if (isFlavorist) {
@@ -66,9 +66,9 @@ export function useNotifications() {
       next[item.id] = item.state;
     });
     seenStatesRef.current = next;
-    saveSeenStates(next);
+    saveSeenStates(user.id, next);
     setItems([]);
-  }, [isCustomer, items]);
+  }, [isCustomer, items, user.id]);
 
   return { items, count: items.length, markAllAsSeen };
 }

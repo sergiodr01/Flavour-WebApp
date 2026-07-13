@@ -15,7 +15,7 @@ class FlavorRepository {
     throw new Error('FlavorRepository.findByState() must be implemented');
   }
 
-  findByName(name) {
+  findByName(name, createdById) {
     throw new Error('FlavorRepository.findByName() must be implemented');
   }
 

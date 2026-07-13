@@ -58,7 +58,7 @@ class FlavorService extends FlavorPort {
       this.#throwConflict('Flavor cannot be edited in its current state');
     }
 
-    const revisions = this.flavorRepository.findByName(existing.name);
+    const revisions = this.flavorRepository.findByName(existing.name, existing.createdById);
     const latest = revisions[0];
 
     if (latest.id !== existing.id) {
@@ -100,7 +100,7 @@ class FlavorService extends FlavorPort {
       this.#throwConflict('Flavor cannot be submitted from its current state');
     }
 
-    const revisions = this.flavorRepository.findByName(flavor.name);
+    const revisions = this.flavorRepository.findByName(flavor.name, flavor.createdById);
     if (revisions[0].id !== flavor.id) {
       this.#throwConflict('A newer version of this flavor exists; only the latest version can be submitted');
     }

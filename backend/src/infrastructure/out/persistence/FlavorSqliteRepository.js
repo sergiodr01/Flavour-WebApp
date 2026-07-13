@@ -61,10 +61,10 @@ class FlavorSqliteRepository extends FlavorRepository {
     return rows.map((row) => this.#toDomain(row));
   }
 
-  findByName(name) {
+  findByName(name, createdById) {
     const rows = db
-      .prepare('SELECT * FROM flavor WHERE name = ? ORDER BY version DESC')
-      .all(name);
+      .prepare('SELECT * FROM flavor WHERE name = ? AND created_by_id = ? ORDER BY version DESC')
+      .all(name, createdById);
     return rows.map((row) => this.#toDomain(row));
   }
 

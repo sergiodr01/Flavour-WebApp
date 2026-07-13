@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import FlavorIcon from '../components/common/FlavorIcon';
 
 export default function LoginPage() {
   const { login, isAuthenticated } = useAuth();
@@ -30,7 +31,10 @@ export default function LoginPage() {
 
   return (
     <div className="login-page">
-      <h1>Flavour WebApp</h1>
+      <h1 className="login-title">
+        <FlavorIcon size={26} />
+        Flavour WebApp
+      </h1>
       <form onSubmit={handleSubmit}>
         <div className="form-field">
           <label className="form-label">Email</label>

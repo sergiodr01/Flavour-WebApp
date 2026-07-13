@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import NotificationBell from '../components/notifications/NotificationBell';
 
 export default function AppLayout() {
   const { user, logout } = useAuth();
@@ -16,7 +17,8 @@ export default function AppLayout() {
         }}
       >
         <strong>Flavour WebApp</strong>
-        <span>
+        <span style={{ display: 'flex', alignItems: 'center' }}>
+          <NotificationBell />
           {user.firstName} ({user.roles.join(', ')})
           <button onClick={logout} style={{ marginLeft: '1rem' }}>
             Logout

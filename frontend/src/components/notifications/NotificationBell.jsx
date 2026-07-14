@@ -3,7 +3,7 @@ import { useNotifications } from '../../hooks/useNotifications';
 import NotificationPanel from './NotificationPanel';
 
 export default function NotificationBell() {
-  const { items, count, markAllAsSeen } = useNotifications();
+  const { unread, old, count, markAllAsSeen } = useNotifications();
   const [open, setOpen] = useState(false);
 
   function toggle() {
@@ -19,7 +19,7 @@ export default function NotificationBell() {
         🔔
         {count > 0 && <span className="notification-badge">{count}</span>}
       </button>
-      {open && <NotificationPanel items={items} />}
+      {open && <NotificationPanel unread={unread} old={old} />}
     </div>
   );
 }

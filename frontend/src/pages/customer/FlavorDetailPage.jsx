@@ -5,6 +5,7 @@ import { fetchIngredients } from '../../api/ingredientApi';
 import FlavorForm from '../../components/flavor/FlavorForm';
 import VersionHistory from '../../components/flavor/VersionHistory';
 import StateBadge from '../../components/common/StateBadge';
+import CommentSection from '../../components/review/CommentSection';
 
 export default function FlavorDetailPage() {
   const { id } = useParams();
@@ -53,6 +54,8 @@ export default function FlavorDetailPage() {
   if (loading) return <p>Loading flavor...</p>;
   if (!flavor) return <p>Flavor not found.</p>;
 
+  const isLatestVersion = versions.length === 0 || versions[0].id === flavor.id;
+
   if (isEditing) {
     return (
       <div>
@@ -93,7 +96,7 @@ export default function FlavorDetailPage() {
         ))}
       </ul>
 
-      {flavor.state === 'new' && (
+      {flavor.state === 'new' && isLatestVersion && (
         <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
           <button type="button" onClick={() => setIsEditing(true)} className="btn btn-secondary">
             Edit (creates new version)
@@ -103,9 +106,16 @@ export default function FlavorDetailPage() {
           </button>
         </div>
       )}
+      {flavor.state === 'new' && !isLatestVersion && (
+        <p className="form-hint" style={{ marginTop: '1rem' }}>
+          A newer version of this flavor exists. Open the latest version to edit or submit it.
+        </p>
+      )}
       {submitError && <p className="form-error">{submitError}</p>}
 
       <VersionHistory versions={versions} currentId={flavor.id} />
+
+      <CommentSection flavorId={flavor.id} canAddComment={false} />
     </div>
   );
 }

@@ -401,6 +401,57 @@ h1, h2, h3 {
   border-bottom: none;
 }
 
+.notification-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.notification-item a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.notification-tag {
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-full);
+}
+
+.notification-tag-new {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.notification-tag-old {
+  background: var(--state-new-bg);
+  color: var(--state-new-text);
+}
+
+.notification-item.is-new a {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.notification-item.is-old {
+  opacity: 0.7;
+}
+
+.notification-item.is-old a {
+  color: var(--color-text-muted);
+}
+
+.notification-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0.3rem 0;
+}
+
 .notification-panel .empty-state {
   padding: 0.75rem;
   margin: 0;

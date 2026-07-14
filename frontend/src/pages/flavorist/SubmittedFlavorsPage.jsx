@@ -22,10 +22,10 @@ export default function SubmittedFlavorsPage() {
         {flavors.map((f) => (
           <li key={f.id} className="card">
             <Link to={`/review/${f.id}`} className="card-link">
-              {f.label}
+              {f.name}
             </Link>
             <div className="muted">
-              {f.name} · v{f.version}
+              {f.label} · v{f.version}
             </div>
           </li>
         ))}

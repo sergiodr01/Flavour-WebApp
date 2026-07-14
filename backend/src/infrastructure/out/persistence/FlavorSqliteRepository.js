@@ -49,7 +49,7 @@ class FlavorSqliteRepository extends FlavorRepository {
 
   findByCreatedBy(userId) {
     const rows = db
-      .prepare('SELECT * FROM flavor WHERE created_by_id = ? ORDER BY name, version')
+      .prepare('SELECT * FROM flavor WHERE created_by_id = ? ORDER BY created_at DESC, id DESC')
       .all(userId);
     return rows.map((row) => this.#toDomain(row));
   }

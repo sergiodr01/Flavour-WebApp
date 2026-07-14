@@ -30,11 +30,11 @@ export default function FlavorListPage() {
         {flavors.map((f) => (
           <li key={f.id} className="card">
             <Link to={`/flavors/${f.id}`} className="card-link">
-              {f.label}
+              {f.name}
             </Link>{' '}
             <StateBadge state={f.state} />
             <div className="muted">
-              {f.name} · v{f.version}
+              {f.label} · v{f.version}
             </div>
           </li>
         ))}

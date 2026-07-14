@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 
 function authMiddleware(req, res, next) {
   const header = req.headers.authorization;
-
+console.log(header);
   if (!header || !header.startsWith('Bearer ')) {
+    console.log(!header.startsWith('Bearer '));
     return res.status(401).json({ error: 'Missing or malformed Authorization header' });
   }
 

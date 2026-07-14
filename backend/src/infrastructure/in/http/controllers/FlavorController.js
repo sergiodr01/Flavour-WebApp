@@ -19,6 +19,7 @@ function listMine(req, res, next) {
 
 function getById(req, res, next) {
   try {
+    console.log(req.params);
     res.json(flavorService.getById(Number(req.params.id)));
   } catch (err) {
     next(err);

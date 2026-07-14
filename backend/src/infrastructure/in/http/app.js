@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
+  console.log('GET /api/health - health check');
   res.json({ status: 'ok', message: 'Flavour API running' });
 });
 
